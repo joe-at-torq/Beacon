@@ -1,0 +1,13 @@
+services:
+  tim:
+    build: .
+    image: tim:latest
+    container_name: tim
+    ports:
+      - "${TIM_HOST_PORT:-8443}:8443"
+    volumes:
+      - tim-data:/data
+    restart: unless-stopped
+
+volumes:
+  tim-data:
