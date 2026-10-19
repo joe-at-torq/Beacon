@@ -1,0 +1,9 @@
+/* Small TIM touches on top of the stock Swagger UI theme. */
+body { margin: 0; background: #fafafa; }
+.swagger-ui { font-family: "Inter Variable", system-ui, -apple-system, "Segoe UI", sans-serif; }
+.swagger-ui .info { margin: 32px 0 16px; }
+.swagger-ui .info .title { font-weight: 700; }
+.swagger-ui .info .title small.version-stamp { background: #7c5cff; }
+.swagger-ui .scheme-container { box-shadow: none; border-bottom: 1px solid #ececf1; }
+.swagger-ui .btn.authorize { border-color: #7c5cff; color: #7c5cff; }
+.swagger-ui .btn.authorize svg { fill: #7c5cff; }

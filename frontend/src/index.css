@@ -1,0 +1,211 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --background: 240 20% 98%;
+    --foreground: 240 10% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 8%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 8%;
+    --muted: 240 12% 95%;
+    --muted-foreground: 240 5% 42%;
+    --accent: 250 60% 96%;
+    --accent-foreground: 252 60% 40%;
+    --primary: 252 78% 60%;
+    --primary-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 70% 36%;
+    --warning: 38 92% 50%;
+    --border: 240 10% 90%;
+    --input: 240 10% 88%;
+    --ring: 252 78% 60%;
+
+    /* Chart roles (dataviz reference palette, light) */
+    --chart-surface: #ffffff;
+    --chart-grid: #e1e0d9;
+    --chart-axis: #898781;
+    --chart-ink: #52514e;
+    --series-1: #2a78d6;
+    --series-2: #eb6834;
+
+    /* Categorical slots (dataviz reference order, light). Workspaces are always direct-labeled. */
+    --cat-1: #2a78d6;
+    --cat-2: #eb6834;
+    --cat-3: #1baf7a;
+    --cat-4: #eda100;
+    --cat-5: #e87ba4;
+    --cat-6: #008300;
+    --cat-7: #4a3aa7;
+    --cat-8: #e34948;
+
+    /* Reputation diverging scale: blue (safe) <- gray (no verdict) -> red (malicious). Validated per arm. */
+    --rep-0: #a3a29c;
+    --rep-1: #1c5cab;
+    --rep-2: #2a78d6;
+    --rep-3: #5598e7;
+    --rep-4: #86b6ef;
+    --rep-5: #f19e97;
+    --rep-6: #ec7b74;
+    --rep-7: #e15955;
+    --rep-8: #cc3d3d;
+    --rep-9: #ac3031;
+    --rep-10: #892a29;
+  }
+
+  .dark {
+    color-scheme: dark;
+    --background: 240 14% 5%;
+    --foreground: 240 10% 96%;
+    --card: 240 12% 8%;
+    --card-foreground: 240 10% 96%;
+    --popover: 240 12% 9%;
+    --popover-foreground: 240 10% 96%;
+    --muted: 240 10% 13%;
+    --muted-foreground: 240 6% 64%;
+    --accent: 252 30% 16%;
+    --accent-foreground: 252 90% 82%;
+    --primary: 252 85% 67%;
+    --primary-foreground: 0 0% 100%;
+    --destructive: 0 70% 56%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 60% 45%;
+    --warning: 38 92% 55%;
+    --border: 240 8% 16%;
+    --input: 240 8% 20%;
+    --ring: 252 85% 67%;
+
+    --chart-surface: #131318;
+    --chart-grid: #2c2c2a;
+    --chart-axis: #898781;
+    --chart-ink: #c3c2b7;
+    --series-1: #3987e5;
+    --series-2: #d95926;
+
+    --cat-1: #3987e5;
+    --cat-2: #d95926;
+    --cat-3: #199e70;
+    --cat-4: #c98500;
+    --cat-5: #d55181;
+    --cat-6: #008300;
+    --cat-7: #9085e9;
+    --cat-8: #e66767;
+
+    --rep-0: #6b6a65;
+    --rep-1: #1c5cab;
+    --rep-2: #2a78d6;
+    --rep-3: #5598e7;
+    --rep-4: #86b6ef;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  /* Smooth light/dark cross-fade when the theme toggles. */
+  html.theme-transition,
+  html.theme-transition *,
+  html.theme-transition *::before,
+  html.theme-transition *::after {
+    transition: background-color 350ms ease, border-color 350ms ease, color 250ms ease, fill 350ms ease,
+      stroke 350ms ease !important;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.25);
+  }
+
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground) / 0.25);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground) / 0.45);
+    background-clip: content-box;
+    border: 3px solid transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .glass {
+    @apply border bg-card/70 backdrop-blur-xl;
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  .bg-grid {
+    background-image: linear-gradient(hsl(var(--foreground) / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--foreground) / 0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+}
+
+/* ---- Dashboard grid (react-grid-layout) ---------------------------------------------------- */
+@layer components {
+  .tim-grid-static .react-grid-item {
+    transition: none !important;
+  }
+  .tim-grid .react-grid-item.react-grid-placeholder {
+    background: hsl(var(--primary));
+    opacity: 0.12;
+    border-radius: 1.125rem;
+  }
+  .tim-grid .react-grid-item.react-draggable-dragging,
+  .tim-grid .react-grid-item.resizing {
+    z-index: 30;
+    opacity: 0.92;
+  }
+  .tim-grid .react-grid-item.react-draggable-dragging > div > .rounded-2xl,
+  .tim-grid .react-grid-item.resizing > div > .rounded-2xl {
+    box-shadow: 0 24px 48px -16px rgb(0 0 0 / 0.35);
+  }
+  .tim-grid .react-grid-item > .react-resizable-handle {
+    background-image: none;
+    opacity: 0;
+    transition: opacity 150ms;
+    z-index: 20;
+  }
+  .tim-grid .react-grid-item:hover > .react-resizable-handle,
+  .tim-grid .react-grid-item.resizing > .react-resizable-handle {
+    opacity: 1;
+  }
+  .tim-grid .react-grid-item > .react-resizable-handle.react-resizable-handle-se::after {
+    right: 6px;
+    bottom: 6px;
+    width: 9px;
+    height: 9px;
+    border-right: 2px solid hsl(var(--muted-foreground) / 0.7);
+    border-bottom: 2px solid hsl(var(--muted-foreground) / 0.7);
+    border-bottom-right-radius: 3px;
+  }
+}
