@@ -154,3 +154,24 @@ def test_not_found_and_clean_results_map_to_probably_safe(admin_client, db):
     assert norm.should_apply(cfg, nf, r)
     malicious = _obs(db, "198.51.100.43", "SCORE_UNKNOWN", virustotal=("malicious", {"malicious": 9, "total": 90}), otx=("unknown", {"pulses": 0}))
     assert norm.evaluate(cfg, malicious)["reputation"] == "SCORE_MALICIOUS"  # most severe still wins
+
+
+def test_auto_is_the_default_and_held_back_verdicts_explain_why(admin_client, db):
+    """Central enrichment applies the normalized verdict without asking; a lowering one is held back with a reason."""
+    assert admin_client.get("/api/normalization").json()["settings"]["mode"] == "auto"
+    admin_client.post("/api/integrations", json={"provider": "abuseipdb", "api_key": "key-" + "x" * 20})
+    _rules(admin_client, "abuseipdb", ABUSE + [{"metric": "abuse_confidence", "operator": "<", "value": 25,
+                                                "reputation": "SCORE_PROBABLY_SAFE"}])
+    raise_id = admin_client.post("/api/observables", json={"type": IP, "value": "192.0.2.90"}).json()["id"]
+    lower_id = admin_client.post("/api/observables", json={"type": IP, "value": "192.0.2.91",
+                                                           "reputation": "SCORE_MALICIOUS"}).json()["id"]
+    with respx.mock() as mock:
+        route = mock.get("https://api.abuseipdb.com/api/v2/check")
+        route.mock(return_value=httpx.Response(200, json={"data": {"abuseConfidenceScore": 64, "totalReports": 3}}))
+        up = admin_client.post(f"/api/observables/{raise_id}/enrich").json()
+        route.mock(return_value=httpx.Response(200, json={"data": {"abuseConfidenceScore": 0, "totalReports": 0}}))
+        down = admin_client.post(f"/api/observables/{lower_id}/enrich").json()
+    assert up["reputation"] == "SCORE_PROBABLY_MALICIOUS"  # applied automatically
+    assert up["normalized"] | {} and up["normalized"]["mode"] == "auto" and up["normalized"]["blocked"] is None
+    assert down["reputation"] == "SCORE_MALICIOUS"  # "only raise severity" kept the stronger verdict
+    assert down["normalized"]["differs"] is True and down["normalized"]["blocked"] == "lower"

@@ -364,7 +364,7 @@ function ObservableDrawer({ id, onClose }: { id: number | null; onClose: () => v
               intel={o.intel}
               raw={o.enrichment}
               currentReputation={o.reputation}
-              onApplyReputation={editable ? (rep) => applyRep.mutate(rep) : undefined}
+              onApplyReputation={editable && !o.normalized ? (rep) => applyRep.mutate(rep) : undefined}
               regionOf={regionOf}
               preferSource={justEnriched}
             />

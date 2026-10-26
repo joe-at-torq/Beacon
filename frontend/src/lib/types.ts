@@ -392,6 +392,9 @@ export interface NormalizedResult {
   current: string;
   differs: boolean;
   contributions: NormContribution[];
+  /** Detail view: the normalization mode, and why an automatic apply was held back. */
+  mode?: "auto" | "suggest";
+  blocked?: "lower" | null;
 }
 
 export type NormStrategy = "highest_severity" | "lowest_severity" | "most_common" | "priority";

@@ -13,7 +13,7 @@ DEFAULTS: dict[str, Any] = {
     "sync_enabled": True,
     "sync_interval_minutes": 15,
     # Threat-intel reputation normalization
-    "normalization_mode": "suggest",  # suggest | auto
+    "normalization_mode": "auto",  # auto (apply after each enrichment) | suggest
     "normalization_strategy": "highest_severity",  # highest_severity | lowest_severity | most_common | priority
     "normalization_only_escalate": True,  # auto mode never lowers a reputation
     "normalization_fallback_verdicts": False,  # use a provider's built-in verdict when none of its rules match

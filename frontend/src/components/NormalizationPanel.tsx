@@ -231,8 +231,8 @@ function SettingsCard({ config, editable, onChange }: { config: NormConfig; edit
             value={s.mode}
             onChange={(mode) => editable && onChange({ mode })}
             options={[
-              { value: "suggest", label: <><Info /> Suggest only</> },
               { value: "auto", label: <><Wand2 /> Apply automatically</> },
+              { value: "suggest", label: <><Info /> Suggest only</> },
             ]}
           />
           <p className="mt-1.5 text-xs text-muted-foreground">
@@ -478,17 +478,32 @@ export function NormalizedBanner({
         <span className="text-sm font-medium">Normalized reputation</span>
         <ReputationBadge value={result.reputation} />
         <div className="flex-1" />
-        {result.differs ? (
+        {!result.differs ? (
+          <Badge tone="success">{result.mode === "auto" ? "Applied" : "Matches current"}</Badge>
+        ) : result.mode === "auto" ? (
+          // Automatic mode applies verdicts after enrichment; a difference here was held back or predates a change.
+          onApply && (
+            <Button size="sm" variant="ghost" onClick={onApply} loading={applying}>
+              {result.blocked === "lower" ? "Apply anyway" : "Apply now"}
+            </Button>
+          )
+        ) : (
           onApply && (
             <Button size="sm" onClick={onApply} loading={applying}>
               {!applying && <Sparkles />} Apply
             </Button>
           )
-        ) : (
-          <Badge tone="success">Matches current</Badge>
         )}
         <p className="basis-full text-xs text-muted-foreground">
           {strategy} · decided by {p(result.decided_by).name}
+          {result.differs && result.mode === "auto" && (
+            <span className="text-foreground">
+              {" · "}
+              {result.blocked === "lower"
+                ? "Not applied automatically: it would lower the severity (only raise severity is on)."
+                : "Mappings changed since the last enrichment; it applies on the next one."}
+            </span>
+          )}
         </p>
       </div>
       <ul className="divide-y border-t bg-card/60 text-xs">

@@ -106,7 +106,14 @@ def detail_out(db: Session, obs: Observable) -> dict:
     from app.serializers import iso
 
     out = observable_out(obs, ws_names(db), detail=True)
-    out["normalized"] = normalize.evaluate(normalize.load_config(db), obs) if obs.intel else None
+    cfg = normalize.load_config(db)
+    out["normalized"] = normalize.evaluate(cfg, obs) if obs.intel else None
+    if out["normalized"]:
+        # In automatic mode a differing verdict was held back on purpose; say why instead of asking to apply it.
+        blocked = None
+        if cfg.mode == "auto" and out["normalized"]["differs"] and not normalize.should_apply(cfg, obs, out["normalized"]):
+            blocked = "lower"  # "only raise severity" is on
+        out["normalized"] |= {"mode": cfg.mode, "blocked": blocked}
     out["feeds"] = [
         {"feed_id": link.feed_id, "feed_name": name, "stix_id": link.stix_id, "reputation": link.reputation,
          "valid_until": iso(link.valid_until), "active": link.active, "first_seen_at": iso(link.first_seen_at),
