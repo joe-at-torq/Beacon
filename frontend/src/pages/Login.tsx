@@ -87,7 +87,6 @@ export default function Login() {
             Sign in
           </Button>
         </form>
-        <p className="mt-6 text-center text-[11px] text-muted-foreground">Synchronizes observables across Torq workspaces</p>
       </motion.div>
     </div>
   );
