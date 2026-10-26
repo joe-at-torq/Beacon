@@ -122,8 +122,12 @@ severe, least severe, most common, or provider priority). **Add recommended mapp
 defaults, including mapping clean results and lookups with no data to *Probably safe* so enriched
 observables don't stay Unknown.
 
-Normalization either **suggests** a reputation (shown with an Apply button on the observable) or
-**applies it automatically** after each enrichment, optionally only ever raising severity.
+By default normalization **applies automatically**: after each central enrichment (the Enrich button,
+bulk enrich or an enrichment rule) the observable's reputation is set to the normalized verdict, with no
+Apply step. The **Only raise severity** safeguard (on by default) holds back verdicts that would lower a
+reputation; the observable's Enrichment tab then explains why, with an "Apply anyway" override. Switch to
+**Suggest only** to review verdicts first (shown with an Apply button on each observable), and use
+**Apply to N observables** to bring observables enriched earlier in line.
 
 ## Threat feeds
 
