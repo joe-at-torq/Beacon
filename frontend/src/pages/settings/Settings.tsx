@@ -1,4 +1,5 @@
 import { Activity, Code2, Puzzle, Server, SlidersHorizontal, Users } from "lucide-react";
+import { createPortal } from "react-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { PageHeader } from "@/components/bits";
@@ -47,6 +48,13 @@ export default function SettingsPage() {
           {current === "sync" && <SyncLogTab />}
         </motion.div>
       </AnimatePresence>
+      {/* Portaled: the animated page wrappers use transforms, which would break position: fixed. */}
+      {createPortal(
+        <span className="pointer-events-none fixed bottom-3 right-4 z-10 select-none text-[11px] tabular-nums text-muted-foreground">
+          v{__APP_VERSION__}
+        </span>,
+        document.body,
+      )}
     </>
   );
 }
