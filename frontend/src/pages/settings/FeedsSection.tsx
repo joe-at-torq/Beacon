@@ -444,7 +444,7 @@ function TaxiiServerCard() {
         </div>
         <div className="rounded-xl bg-muted/40 p-3 text-xs text-muted-foreground">
           Authenticate with an API key from <span className="font-medium text-foreground">Settings → API</span> (the Viewer role is enough), sent as{" "}
-          <code className="rounded bg-muted px-1">Authorization: Bearer tim_…</code> or as HTTP Basic with any username and the key as the password.
+          <code className="rounded bg-muted px-1">Authorization: Bearer bcn_…</code> or as HTTP Basic with any username and the key as the password.
           Downgraded and deleted observables are published as revoked to clients that poll with <code className="rounded bg-muted px-1">added_after</code>.
         </div>
         {admin && dirty && (

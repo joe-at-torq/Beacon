@@ -8,7 +8,7 @@ from app.models import Workspace
 from app.settings_store import get_setting
 from app.sync.engine import SyncAlreadyRunning, start_background_sync
 
-log = logging.getLogger("tim.scheduler")
+log = logging.getLogger("beacon.scheduler")
 
 JOB_ID = "scheduled-sync"
 scheduler = AsyncIOScheduler()

@@ -12,7 +12,7 @@ from app.config import config
 from app.db import get_db
 from app.models import User
 
-COOKIE_NAME = "tim_session"
+COOKIE_NAME = "beacon_session"
 ROLES = ("admin", "analyst", "viewer")
 
 _secrets: dict | None = None
@@ -79,13 +79,13 @@ def create_session_token(user: User) -> str:
 
 def get_current_user(
     db: Session = Depends(get_db),
-    tim_session: str | None = Cookie(default=None),
+    beacon_session: str | None = Cookie(default=None),
 ) -> User:
     unauthorized = HTTPException(status.HTTP_401_UNAUTHORIZED, "Not authenticated")
-    if not tim_session:
+    if not beacon_session:
         raise unauthorized
     try:
-        payload = jwt.decode(tim_session, load_secrets()["jwt_secret"], algorithms=["HS256"])
+        payload = jwt.decode(beacon_session, load_secrets()["jwt_secret"], algorithms=["HS256"])
     except jwt.PyJWTError:
         raise unauthorized from None
     user = db.get(User, int(payload.get("sub", 0)))

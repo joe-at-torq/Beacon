@@ -25,13 +25,13 @@ Open **https://localhost:8443** and sign in with **admin / admin**. You'll be as
 password straight away. The certificate is self-signed on first start, so your browser will warn
 you the first time.
 
-If port 8443 is already taken, choose another host port: `TIM_HOST_PORT=9443 docker compose up -d`.
+If port 8443 is already taken, choose another host port: `BEACON_HOST_PORT=9443 docker compose up -d`.
 
 Without compose:
 
 ```bash
 docker build -t beacon .
-docker run -d --name beacon -p 8443:8443 -v tim-data:/data beacon
+docker run -d --name beacon -p 8443:8443 -v beacon-data:/data beacon
 ```
 
 All state lives in the `/data` volume: the SQLite database, encryption keys and TLS certificate.
@@ -160,7 +160,7 @@ STIX 2.1 indicators, filtered by minimum reputation (default *Suspicious or risk
 
 - **Discovery URL:** `https://<host>:8443/taxii2/`
 - **Authentication:** an API key from Settings → API (the *viewer* role is enough), sent as
-  `Authorization: Bearer tim_…` or as HTTP Basic with any username and the key as the password.
+  `Authorization: Bearer bcn_…` or as HTTP Basic with any username and the key as the password.
 - Clients that poll with `added_after` also receive downgraded and deleted observables as *revoked*, so
   they can retire them.
 
@@ -207,9 +207,9 @@ Beacon has a documented, versioned API at `/api/v1`. Everything is under **Setti
   The key is shown once, and only a hash of it is stored.
 
 ```bash
-export TIM_API_KEY="tim_…"
+export BEACON_API_KEY="bcn_…"
 curl -sk -X POST https://localhost:8443/api/v1/observables/query \
-  -H "Authorization: Bearer $TIM_API_KEY" -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $BEACON_API_KEY" -H "Content-Type: application/json" \
   -d '{"types":["TYPE_ID_IP_ADDRESS"],"min_severity":8,"sources":["central"]}'
 ```
 
@@ -237,11 +237,11 @@ Container environment variables:
 
 | Variable | Default | Purpose |
 |----------|---------|---------|
-| `TIM_PORT` | `8443` | HTTPS port inside the container |
-| `TIM_HOST_PORT` | `8443` | Host port used by `docker-compose.yml` |
-| `TIM_TLS_CERT` / `TIM_TLS_KEY` | `/data/certs/*.pem` | Use your own certificate (mount it into the container) |
-| `TIM_SESSION_HOURS` | `12` | How long a sign-in session lasts |
-| `TIM_DISABLE_SCHEDULER` | `0` | Set to `1` to turn off all background jobs (scheduled syncs, enrichment queue, feed polling) |
+| `BEACON_PORT` | `8443` | HTTPS port inside the container |
+| `BEACON_HOST_PORT` | `8443` | Host port used by `docker-compose.yml` |
+| `BEACON_TLS_CERT` / `BEACON_TLS_KEY` | `/data/certs/*.pem` | Use your own certificate (mount it into the container) |
+| `BEACON_SESSION_HOURS` | `12` | How long a sign-in session lasts |
+| `BEACON_DISABLE_SCHEDULER` | `0` | Set to `1` to turn off all background jobs (scheduled syncs, enrichment queue, feed polling) |
 
 ## Development
 
@@ -251,8 +251,8 @@ Backend (FastAPI, SQLAlchemy, APScheduler):
 cd backend
 python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt
 .venv/bin/python -m pytest          # unit and end-to-end tests against mocked Torq, provider and feed APIs
-TIM_DATA_DIR=./data .venv/bin/python -m app.bootstrap
-TIM_DATA_DIR=./data .venv/bin/uvicorn app.main:app --port 8443 \
+BEACON_DATA_DIR=./data .venv/bin/python -m app.bootstrap
+BEACON_DATA_DIR=./data .venv/bin/uvicorn app.main:app --port 8443 \
   --ssl-keyfile data/certs/key.pem --ssl-certfile data/certs/cert.pem
 ```
 

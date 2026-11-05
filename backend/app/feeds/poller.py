@@ -17,7 +17,7 @@ from app.models import Feed, FeedLink, Observable, utcnow
 from app.security import decrypt
 from app.stix.parser import parse_objects
 
-log = logging.getLogger("tim.feeds")
+log = logging.getLogger("beacon.feeds")
 
 JOB_ID = "feed-poller"
 TICK_SECONDS = 60

@@ -3,9 +3,9 @@ import sys
 import tempfile
 from pathlib import Path
 
-os.environ.setdefault("TIM_DATA_DIR", tempfile.mkdtemp(prefix="tim-test-"))
-os.environ["TIM_DISABLE_SCHEDULER"] = "1"
-os.environ["TIM_SECURE_COOKIES"] = "0"
+os.environ.setdefault("BEACON_DATA_DIR", tempfile.mkdtemp(prefix="beacon-test-"))
+os.environ["BEACON_DISABLE_SCHEDULER"] = "1"
+os.environ["BEACON_SECURE_COOKIES"] = "0"
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import pytest  # noqa: E402

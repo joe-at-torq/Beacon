@@ -172,34 +172,34 @@
 
 /* ---- Dashboard grid (react-grid-layout) ---------------------------------------------------- */
 @layer components {
-  .tim-grid-static .react-grid-item {
+  .beacon-grid-static .react-grid-item {
     transition: none !important;
   }
-  .tim-grid .react-grid-item.react-grid-placeholder {
+  .beacon-grid .react-grid-item.react-grid-placeholder {
     background: hsl(var(--primary));
     opacity: 0.12;
     border-radius: 1.125rem;
   }
-  .tim-grid .react-grid-item.react-draggable-dragging,
-  .tim-grid .react-grid-item.resizing {
+  .beacon-grid .react-grid-item.react-draggable-dragging,
+  .beacon-grid .react-grid-item.resizing {
     z-index: 30;
     opacity: 0.92;
   }
-  .tim-grid .react-grid-item.react-draggable-dragging > div > .rounded-2xl,
-  .tim-grid .react-grid-item.resizing > div > .rounded-2xl {
+  .beacon-grid .react-grid-item.react-draggable-dragging > div > .rounded-2xl,
+  .beacon-grid .react-grid-item.resizing > div > .rounded-2xl {
     box-shadow: 0 24px 48px -16px rgb(0 0 0 / 0.35);
   }
-  .tim-grid .react-grid-item > .react-resizable-handle {
+  .beacon-grid .react-grid-item > .react-resizable-handle {
     background-image: none;
     opacity: 0;
     transition: opacity 150ms;
     z-index: 20;
   }
-  .tim-grid .react-grid-item:hover > .react-resizable-handle,
-  .tim-grid .react-grid-item.resizing > .react-resizable-handle {
+  .beacon-grid .react-grid-item:hover > .react-resizable-handle,
+  .beacon-grid .react-grid-item.resizing > .react-resizable-handle {
     opacity: 1;
   }
-  .tim-grid .react-grid-item > .react-resizable-handle.react-resizable-handle-se::after {
+  .beacon-grid .react-grid-item > .react-resizable-handle.react-resizable-handle-se::after {
     right: 6px;
     bottom: 6px;
     width: 9px;

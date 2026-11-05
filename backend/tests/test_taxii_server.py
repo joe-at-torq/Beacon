@@ -34,7 +34,7 @@ def test_discovery_collections_auth(taxii):
     client, key = taxii
     assert client.get("/taxii2/", headers=H).status_code == 401
     assert "Basic" in client.get("/taxii2/", headers=H).headers["www-authenticate"]
-    assert client.get("/taxii2/", headers=H | {"Authorization": "Bearer tim_nope"}).status_code == 401
+    assert client.get("/taxii2/", headers=H | {"Authorization": "Bearer bcn_nope"}).status_code == 401
     d = client.get("/taxii2/", headers=_bearer(key))
     assert d.status_code == 200 and d.headers["content-type"].startswith("application/taxii+json")
     assert d.json()["default"].endswith("/taxii2/beacon/")

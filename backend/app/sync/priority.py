@@ -22,7 +22,7 @@ from app.models import Observable, Rule, Workspace
 from app.settings_store import get_setting
 from app.torq.mapping import REPUTATIONS
 
-log = logging.getLogger("tim.priority")
+log = logging.getLogger("beacon.priority")
 
 JOB_ID = "priority-sync"
 DEBOUNCE_SECONDS = 5

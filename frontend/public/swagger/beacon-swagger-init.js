@@ -1,4 +1,4 @@
-// Swagger UI bootstrap for the TIM API (external file: the CSP forbids inline scripts).
+// Swagger UI bootstrap for the Beacon API (external file: the CSP forbids inline scripts).
 window.addEventListener("load", function () {
   window.ui = SwaggerUIBundle({
     url: "/api/v1/openapi.json",
@@ -11,7 +11,7 @@ window.addEventListener("load", function () {
     defaultModelsExpandDepth: 0,
     presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
     layout: "BaseLayout",
-    // Same-origin requests also carry the signed-in TIM session, so "Try it out" works without a key.
+    // Same-origin requests also carry the signed-in Beacon session, so "Try it out" works without a key.
     requestInterceptor: function (req) {
       req.credentials = "same-origin";
       return req;

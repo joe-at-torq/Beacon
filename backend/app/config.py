@@ -4,17 +4,17 @@ from pathlib import Path
 
 class Config:
     def __init__(self) -> None:
-        self.data_dir = Path(os.environ.get("TIM_DATA_DIR", "/data"))
-        self.port = int(os.environ.get("TIM_PORT", "8443"))
-        self.static_dir = Path(os.environ.get("TIM_STATIC_DIR", Path(__file__).resolve().parent.parent / "static"))
-        self.disable_scheduler = os.environ.get("TIM_DISABLE_SCHEDULER", "0") == "1"
+        self.data_dir = Path(os.environ.get("BEACON_DATA_DIR", "/data"))
+        self.port = int(os.environ.get("BEACON_PORT", "8443"))
+        self.static_dir = Path(os.environ.get("BEACON_STATIC_DIR", Path(__file__).resolve().parent.parent / "static"))
+        self.disable_scheduler = os.environ.get("BEACON_DISABLE_SCHEDULER", "0") == "1"
         # Cookie "secure" flag; disable only for local plain-HTTP development.
-        self.secure_cookies = os.environ.get("TIM_SECURE_COOKIES", "1") == "1"
-        self.session_hours = int(os.environ.get("TIM_SESSION_HOURS", "12"))
+        self.secure_cookies = os.environ.get("BEACON_SECURE_COOKIES", "1") == "1"
+        self.session_hours = int(os.environ.get("BEACON_SESSION_HOURS", "12"))
 
     @property
     def db_path(self) -> Path:
-        return self.data_dir / "tim.db"
+        return self.data_dir / "beacon.db"
 
     @property
     def secrets_path(self) -> Path:

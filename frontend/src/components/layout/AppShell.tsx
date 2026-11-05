@@ -209,11 +209,11 @@ function PageContent({ children }: { children: ReactNode }) {
 export function AppShell() {
   const location = useLocation();
   const outlet = useOutlet();
-  const [collapsed, setCollapsed] = useState(() => localStorage.getItem("tim-sidebar") === "collapsed");
+  const [collapsed, setCollapsed] = useState(() => localStorage.getItem("beacon-sidebar") === "collapsed");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [pwOpen, setPwOpen] = useState(false);
 
-  useEffect(() => localStorage.setItem("tim-sidebar", collapsed ? "collapsed" : "open"), [collapsed]);
+  useEffect(() => localStorage.setItem("beacon-sidebar", collapsed ? "collapsed" : "open"), [collapsed]);
 
   return (
     <div className="flex h-full">

@@ -189,15 +189,15 @@ export default function ApiTab() {
   const snippets = [
     {
       title: "Query malicious IPs observed this year",
-      code: `curl -s -X POST "${base}/observables/query" \\\n  -H "Authorization: Bearer $TIM_API_KEY" \\\n  -H "Content-Type: application/json" \\\n  -d '{"types":["TYPE_ID_IP_ADDRESS"],"min_severity":8,"last_observed":{"from":"${new Date().getFullYear()}-01-01T00:00:00Z"},"page_size":100}'`,
+      code: `curl -s -X POST "${base}/observables/query" \\\n  -H "Authorization: Bearer $BEACON_API_KEY" \\\n  -H "Content-Type: application/json" \\\n  -d '{"types":["TYPE_ID_IP_ADDRESS"],"min_severity":8,"last_observed":{"from":"${new Date().getFullYear()}-01-01T00:00:00Z"},"page_size":100}'`,
     },
     {
       title: "Add an observable",
-      code: `curl -s -X POST "${base}/observables" \\\n  -H "Authorization: Bearer $TIM_API_KEY" \\\n  -H "Content-Type: application/json" \\\n  -d '{"type":"TYPE_ID_URL","value":"https://phish.example/login","reputation":"SCORE_MALICIOUS"}'`,
+      code: `curl -s -X POST "${base}/observables" \\\n  -H "Authorization: Bearer $BEACON_API_KEY" \\\n  -H "Content-Type: application/json" \\\n  -d '{"type":"TYPE_ID_URL","value":"https://phish.example/login","reputation":"SCORE_MALICIOUS"}'`,
     },
     {
       title: "Trigger a sync and check its result",
-      code: `RUN=$(curl -s -X POST "${base}/sync" -H "Authorization: Bearer $TIM_API_KEY" | jq .run_id)\ncurl -s "${base}/sync/runs/$RUN" -H "Authorization: Bearer $TIM_API_KEY"`,
+      code: `RUN=$(curl -s -X POST "${base}/sync" -H "Authorization: Bearer $BEACON_API_KEY" | jq .run_id)\ncurl -s "${base}/sync/runs/$RUN" -H "Authorization: Bearer $BEACON_API_KEY"`,
     },
   ];
 
@@ -231,7 +231,7 @@ export default function ApiTab() {
                 <span className="text-xs text-muted-foreground">v2.1 · set the <code>apiKey</code> variable after importing.</span>
               </button>
               <button
-                onClick={() => download("/api/v1/openapi.json", "tim-openapi.json")}
+                onClick={() => download("/api/v1/openapi.json", "beacon-openapi.json")}
                 className="group flex flex-col gap-2 rounded-xl border p-4 text-left transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-soft"
               >
                 <span className="grid size-9 place-items-center rounded-lg bg-accent text-accent-foreground">
@@ -333,7 +333,7 @@ export default function ApiTab() {
       <Card className="h-fit">
         <CardHeader title="Quick start" description="Export your key, then try these requests" />
         <CardBody className="space-y-3">
-          <CodeSnippet title="Set your key" code={`export TIM_API_KEY="tim_…"`} />
+          <CodeSnippet title="Set your key" code={`export BEACON_API_KEY="bcn_…"`} />
           {snippets.map((s) => <CodeSnippet key={s.title} title={s.title} code={s.code} />)}
           <p className="text-xs text-muted-foreground">
             Using a self-signed certificate? Add <code>-k</code> to curl, or install your own certificate in the container.

@@ -10,9 +10,9 @@ RUN npm run build
 FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    TIM_DATA_DIR=/data \
-    TIM_STATIC_DIR=/app/static \
-    TIM_PORT=8443
+    BEACON_DATA_DIR=/data \
+    BEACON_STATIC_DIR=/app/static \
+    BEACON_PORT=8443
 WORKDIR /app
 
 COPY backend/requirements.txt .
@@ -22,11 +22,11 @@ COPY backend/app ./app
 COPY --from=ui /ui/dist ./static
 COPY docker/entrypoint.sh /entrypoint.sh
 
-RUN useradd --system --uid 10001 --home-dir /app tim \
-    && mkdir -p /data && chown -R tim /data \
+RUN useradd --system --uid 10001 --home-dir /app beacon \
+    && mkdir -p /data && chown -R beacon /data \
     && chmod +x /entrypoint.sh
 
-USER tim
+USER beacon
 VOLUME ["/data"]
 EXPOSE 8443
 

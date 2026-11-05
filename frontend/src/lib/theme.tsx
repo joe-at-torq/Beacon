@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 
 export type ThemePref = "light" | "dark" | "system";
-const KEY = "tim-theme";
+const KEY = "beacon-theme";
 
 interface ThemeCtx {
   pref: ThemePref;

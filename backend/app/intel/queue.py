@@ -27,7 +27,7 @@ from app.security import decrypt
 from app.serializers import iso
 from app.settings_store import get_setting
 
-log = logging.getLogger("tim.enrichment")
+log = logging.getLogger("beacon.enrichment")
 
 JOB_ID = "enrichment-queue"
 TICK_SECONDS = 15

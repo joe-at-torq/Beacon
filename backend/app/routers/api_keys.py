@@ -15,7 +15,7 @@ from app.serializers import iso
 
 router = APIRouter(prefix="/api/api-keys", tags=["api-keys"])
 
-KEY_PREFIX = "tim_"
+KEY_PREFIX = "bcn_"
 
 
 def hash_key(key: str) -> str:

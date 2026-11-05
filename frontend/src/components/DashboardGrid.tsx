@@ -110,7 +110,7 @@ export function DashboardGrid({ widgets, layout }: { widgets: Widget[]; layout: 
     {width > 0 && (
     <Responsive
       width={width}
-      className={cn("tim-grid", !mounted && "tim-grid-static")}
+      className={cn("beacon-grid", !mounted && "beacon-grid-static")}
       layouts={layouts}
       breakpoints={BREAKPOINTS}
       cols={COLS}

@@ -9,7 +9,7 @@ from datetime import UTC, datetime
 
 import httpx
 
-log = logging.getLogger("tim.torq")
+log = logging.getLogger("beacon.torq")
 
 # (auth base, public API base). Public API paths live under /public, e.g. /public/v1alpha/observables/query.
 REGIONS = {

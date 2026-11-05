@@ -17,7 +17,7 @@ ROLE_RANK = {"viewer": 0, "analyst": 1, "admin": 2}
 bearer = HTTPBearer(
     auto_error=False,
     scheme_name="ApiKey",
-    description="Beacon API key created in **Settings → API**, sent as `Authorization: Bearer tim_…`.",
+    description="Beacon API key created in **Settings → API**, sent as `Authorization: Bearer bcn_…`.",
 )
 
 
@@ -55,13 +55,13 @@ def principal_for_key(db: Session, raw_key: str, unauthorized=None) -> Principal
 def api_principal(
     creds: HTTPAuthorizationCredentials | None = Security(bearer),
     db: Session = Depends(get_db),
-    tim_session: str | None = Cookie(default=None, include_in_schema=False),
+    beacon_session: str | None = Cookie(default=None, include_in_schema=False),
 ) -> Principal:
     if creds is not None:
         return principal_for_key(db, creds.credentials)
-    if tim_session:
+    if beacon_session:
         try:
-            user = get_current_user(db, tim_session)
+            user = get_current_user(db, beacon_session)
         except HTTPException:
             raise _unauthorized("Session expired; sign in again or use an API key") from None
         if user.must_change_password:

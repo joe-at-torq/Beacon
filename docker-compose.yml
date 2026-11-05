@@ -1,13 +1,16 @@
+name: beacon
+
 services:
-  tim:
+  beacon:
     build: .
-    image: tim:latest
-    container_name: tim
+    image: beacon:latest
+    container_name: beacon
     ports:
-      - "${TIM_HOST_PORT:-8443}:8443"
+      - "${BEACON_HOST_PORT:-8443}:8443"
     volumes:
-      - tim-data:/data
+      - beacon-data:/data
     restart: unless-stopped
 
 volumes:
-  tim-data:
+  beacon-data:
+    name: beacon-data

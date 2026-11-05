@@ -13,7 +13,7 @@ def _key(admin_client, role="analyst", **kw) -> str:
     r = admin_client.post("/api/api-keys", json={"name": f"{role}-key", "role": role, **kw})
     assert r.status_code == 201, r.text
     body = r.json()
-    assert body["key"].startswith("tim_") and body["prefix"] == body["key"][:10]
+    assert body["key"].startswith("bcn_") and body["prefix"] == body["key"][:10]
     return body["key"]
 
 
@@ -29,7 +29,7 @@ def test_api_key_lifecycle_and_roles(admin_client, db):
     c = admin_client
 
     assert c.get("/api/v1/observables").status_code == 401
-    assert c.get("/api/v1/observables", headers=_h("tim_bogus")).status_code == 401
+    assert c.get("/api/v1/observables", headers=_h("bcn_bogus")).status_code == 401
     assert c.get("/api/v1/observables", headers=_h(viewer)).status_code == 200
     body = {"type": IP, "value": "203.0.113.9", "reputation": "SCORE_MALICIOUS"}
     assert c.post("/api/v1/observables", json=body, headers=_h(viewer)).status_code == 403

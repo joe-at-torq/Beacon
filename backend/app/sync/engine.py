@@ -22,7 +22,7 @@ from app.torq.client import Recorder, TorqClient, TorqError
 from app.torq.mapping import RemoteObservable, build_payload, normalize_value, parse_remote
 
 
-log = logging.getLogger("tim.sync")
+log = logging.getLogger("beacon.sync")
 
 PULL_CONCURRENCY = 4
 PUSH_CONCURRENCY = 8

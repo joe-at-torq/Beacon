@@ -10,7 +10,7 @@ DESCRIPTION = """
 Programmatic access to the **Beacon** central observable database.
 
 **Authentication**: create an API key in **Settings → API** and send it as
-`Authorization: Bearer tim_…`. Each key has a role:
+`Authorization: Bearer bcn_…`. Each key has a role:
 `viewer` (read only), `analyst` (also observable changes and syncs) or `admin` (also rules).
 In this documentation, use **Authorize** to set your key, or just use your signed-in browser session.
 
@@ -49,13 +49,13 @@ SWAGGER_HTML = """<!doctype html>
     <title>Beacon API · Swagger UI</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/swagger/swagger-ui.css" />
-    <link rel="stylesheet" href="/swagger/tim-swagger.css" />
+    <link rel="stylesheet" href="/swagger/beacon-swagger.css" />
   </head>
   <body>
     <div id="swagger-ui"></div>
     <script src="/swagger/swagger-ui-bundle.js"></script>
     <script src="/swagger/swagger-ui-standalone-preset.js"></script>
-    <script src="/swagger/tim-swagger-init.js"></script>
+    <script src="/swagger/beacon-swagger-init.js"></script>
   </body>
 </html>
 """

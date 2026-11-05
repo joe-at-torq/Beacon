@@ -16,7 +16,7 @@ from app.db import init_engine, session_scope
 from app.models import User
 from app.security import hash_password, load_secrets
 
-log = logging.getLogger("tim.bootstrap")
+log = logging.getLogger("beacon.bootstrap")
 
 
 def ensure_certificate() -> None:
