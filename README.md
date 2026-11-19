@@ -1,3 +1,6 @@
+
+![https://github.com/joe-at-torq/Beacon](https://github.com/joe-at-torq/Beacon/blob/main/beacon_dark.png)
+
 # Beacon — Threat Intelligence Manager for Torq
 
 Beacon keeps one central database of observables (IOCs) in sync across any number of
